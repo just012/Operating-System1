@@ -11,7 +11,7 @@ int main()
 	  float AVG_WAIT, AVG_TAT;
       printf("\nEnter Total Number of Processes:\t"); 
       scanf("%d", &N); 
-      x = limit; 
+      x = N; 
       for(i = 0; i < N; i++) 
       {
             printf("\nEnter Details of Process[%d]\n", i + 1);
@@ -68,7 +68,7 @@ int main()
             if(M[i] == 0 && counter == 1) 
             { 
                   x--; 
-                  printf("\nProcess[%d]\t%d\t\t%d\t\t %d\t\t\t %d\t\t\t\t\t%d", i + 1,ART[i], BRT[i],priority[i], total - ART[i], total - ART[i] - BRT[i]);
+                  printf("\nProcess[%d]\t%d\t\t\t%d\t\t %d\t\t\t %d\t\t\t%d", i + 1,ART[i], BRT[i],priority[i], total - ART[i], total - ART[i] - BRT[i]);
                   WAIT = WAIT + total - ART[i] - BRT[i]; 
                   TAT = TAT + total - ART[i]; 
                   counter = 0; 
