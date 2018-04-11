@@ -3,70 +3,81 @@
  
 int main() 
 { 
-      int i, limit, total = 0, x, counter = 0, time_quantum; 
+      int i, N, total = 0, x, counter = 0, TIME_QUANTUM; 
       int sum=0,p;
-	  int wait_time = 0, turnaround_time = 0, arrival_time[10], burst_time[10], temp[10],priority[20],m[20]; 
-      float average_wait_time, average_turnaround_time;
+	  
+	  int WAIT = 0, TAT = 0, ART[10], BRT[10], M[10],priority[20],m[20]; 
+      
+	  float AVG_WAIT, AVG_TAT;
       printf("\nEnter Total Number of Processes:\t"); 
-      scanf("%d", &limit); 
+      scanf("%d", &N); 
       x = limit; 
-      for(i = 0; i < limit; i++) 
+      for(i = 0; i < N; i++) 
       {
             printf("\nEnter Details of Process[%d]\n", i + 1);
-            printf("Arrival Time:\t");
-            scanf("%d", &arrival_time[i]);
-            printf("Burst Time:\t");
-            scanf("%d", &burst_time[i]);
-			 printf("Priority:\t");
-            scanf("%d",&priority[i]); 
-            //temp[i] = burst_time[i];
-            sum= sum+burst_time[i];
-      } 
-      //printf("\nEnter Time Quantum:\t"); 
-      //scanf("%d", &time_quantum); 
+         
+		    printf("Arrival Time:\t");
+         
+		    scanf("%d", &ART[i]);
+         
+		    printf("Burst Time:\t");
+         
+		    scanf("%d", &BRT[i]);
+			
+			printf("Priority:\t");
+            
+			scanf("%d",&priority[i]); 
+            
+            sum= sum+BRT[i];
+      }   
 		
+     
 	
 		
-		p = sum/limit;
-		printf("Average of Burst Time : %d\n",p);
-		for(i=0;i<limit;i++)
+		p = sum/N;
+		printf("AVG of Burst Time : %d\n",p);
+		for(i=0;i<N;i++)
 		{
-			temp[i]=burst_time[i]%p;
+			M[i]=BRT[i]%p;
 		}
-		time_quantum=p;
-		printf("Time Quantum is : %d\n",time_quantum);
+		
+		
+		
+		
+		TIME_QUANTUM=p;
+		printf("Time Quantum is : %d\n\n",TIME_QUANTUM);
 	
-		printf("\nProcess ID\t\tBurst Time\t Priority\t\t Turnaround Time\t Waiting Time\n");
+		printf("\nProcess ID\tArrival Time\t\tBurst Time\t Priority\t\t Turnaround Time\t Waiting Time\n");
       
 	
 	  for(total = 0, i = 0; x != 0;) 
       { 
      
            
-		    if(temp[i] <= time_quantum && temp[i] > 0) 
+		    if(M[i] <= TIME_QUANTUM && M[i] > 0) 
             { 
-                  total = total + temp[i]; 
-                  temp[i] = 0; 
+                  total = total + M[i]; 
+                  M[i] = 0; 
                   counter = 1; 
             } 
-            else if(temp[i] > 0) 
+            else if(M[i] > 0) 
             { 
-                  temp[i] = temp[i] - time_quantum; 
-                  total = total + time_quantum; 
+                  M[i] = M[i] - TIME_QUANTUM; 
+                  total = total + TIME_QUANTUM; 
             } 
-            if(temp[i] == 0 && counter == 1) 
+            if(M[i] == 0 && counter == 1) 
             { 
                   x--; 
-                  printf("\nProcess[%d]\t\t%d\t\t %d\t\t\t %d\t\t\t\t\t%d", i + 1, burst_time[i],priority[i], total - arrival_time[i], total - arrival_time[i] - burst_time[i]);
-                  wait_time = wait_time + total - arrival_time[i] - burst_time[i]; 
-                  turnaround_time = turnaround_time + total - arrival_time[i]; 
+                  printf("\nProcess[%d]\t%d\t\t%d\t\t %d\t\t\t %d\t\t\t\t\t%d", i + 1,ART[i], BRT[i],priority[i], total - ART[i], total - ART[i] - BRT[i]);
+                  WAIT = WAIT + total - ART[i] - BRT[i]; 
+                  TAT = TAT + total - ART[i]; 
                   counter = 0; 
             } 
-            if(i == limit - 1) 
+            if(i == N - 1) 
             {
                   i = 0; 
             }
-            else if(arrival_time[i + 1] <= total) 
+            else if(ART[i + 1] <= total) 
             {
                   i++;
             }
@@ -76,9 +87,12 @@ int main()
             }
       } 
 	
-      average_wait_time = wait_time * 1.0 / limit;
-      average_turnaround_time = turnaround_time * 1.0 / limit;
-      printf("\n\nAverage Waiting Time:\t%f", average_wait_time); 
-      printf("\nAvg Turnaround Time:\t%f\n", average_turnaround_time); 
+      AVG_WAIT = WAIT * 1.0 / N;
+      
+	  AVG_TAT = TAT * 1.0 / N;
+      
+	  printf("\n\nAVG Waiting Time:\t%f", AVG_WAIT); 
+      
+	  printf("\nAvg Turnaround Time:\t%f\n", AVG_TAT); 
       return 0; 
 }
